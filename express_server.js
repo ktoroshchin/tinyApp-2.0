@@ -39,32 +39,27 @@ app.get('/urls/:id', (req, res) => {
   res.render('urls_show', templateVars);
 });
 
-app.post('/urls', (req, res) => {
-  console.log(req.body);
+app.get('/u/:shortURL', (req, res) => {
+  let longURL = urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
 });
 
-function generateRandomString() {
-  const characters = ['1', '3', '4', '8', 'x', 'w', 'r', 'g', 'p'];
-  var strLength = 6;
-  var randomized = "";
-  for (var i = 0; i < strLength; i++) {
-    var el = characters[Math.floor(Math.random() * characters.length)];
-    randomized = randomized.concat(el);
-  }
-  return randomized;
-};
+app.post('/urls', (req, res) => {
+  const shortRandomURL = generateRandomUrl();
+  urlDatabase[shortRandomURL] = req.body.longURL;
+  res.redirect(`/urls/${shortRandomURL}`);
+});
 
 function generateRandomUrl() {
   const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'a', 'b', 'c', 'd', 'e', 'x', 'w', 'r', 'g', 'p'];
   const strLength = 6;
-  let randomized = "";
+  let randomized = '';
   for (var i = 0; i < strLength; i++) {
     let randomIndex = characters[Math.floor(Math.random() * characters.length)];
     randomized = randomized.concat(randomIndex);
   }
   return randomized;
 }
-console.log(generateRandomUrl());
 
 
 app.listen(PORT, () => {
