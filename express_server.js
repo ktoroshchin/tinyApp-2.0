@@ -41,7 +41,30 @@ app.get('/urls/:id', (req, res) => {
 
 app.post('/urls', (req, res) => {
   console.log(req.body);
-})
+});
+
+function generateRandomString() {
+  const characters = ['1', '3', '4', '8', 'x', 'w', 'r', 'g', 'p'];
+  var strLength = 6;
+  var randomized = "";
+  for (var i = 0; i < strLength; i++) {
+    var el = characters[Math.floor(Math.random() * characters.length)];
+    randomized = randomized.concat(el);
+  }
+  return randomized;
+};
+
+function generateRandomUrl() {
+  const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'a', 'b', 'c', 'd', 'e', 'x', 'w', 'r', 'g', 'p'];
+  const strLength = 6;
+  let randomized = "";
+  for (var i = 0; i < strLength; i++) {
+    let randomIndex = characters[Math.floor(Math.random() * characters.length)];
+    randomized = randomized.concat(randomIndex);
+  }
+  return randomized;
+}
+console.log(generateRandomUrl());
 
 
 app.listen(PORT, () => {
