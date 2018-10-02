@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/styles.css">
   <title>TinyApp</title>
 </head>
 <body>
 
   <% include ./partials/_header %>
 
-  <form class="" action="index.html" method="post">
+  <form class="" action="/urls/9sm5xk/delete" method="POST">
 
     <% for(var shortUrl in urls) { %>
-    <p><a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl] %> </p>
+    <p> <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl] %> <space> <button type="button" class="btn btn-primary">Primary</button> </p>
     <% } %>
 
   </form>
