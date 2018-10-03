@@ -8,9 +8,13 @@ var PORT = 8080;
 
 const bodyParser = require("body-parser");
 
+const cookieParser = require('cookie-parser');
+
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static('./public'));
+
+app.use(cookieParser());
 
 app.set('view engine', 'ejs');
 
@@ -21,7 +25,10 @@ var urlDatabase = {
 };
 
 app.get('/urls', (req, res) => {
-  let templateVars = { urls: urlDatabase };
+  let templateVars = {
+    urls: urlDatabase,
+    username: req.cookies.userName
+  };
   res.render('urls_index', templateVars);
 });
 
@@ -58,6 +65,20 @@ app.post('/urls/:id/delete', (req, res) => {
   delete urlDatabase[req.params.id];
   res.redirect('/urls')
 });
+
+// app.get('/login', (req, res) => {
+//   res.render('login');
+// })
+
+app.post('/login', (req, res) => {
+  res.cookie('userName', req.body.userName)
+  res.redirect('/urls');
+});
+
+app.post('/logout', (req, res) => {
+  res.clearCookie('userName');
+  res.redirect('/urls');
+})
 
 function generateRandomUrl() {
   const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'a', 'b', 'c', 'd', 'e', 'x', 'w', 'r', 'g', 'p'];

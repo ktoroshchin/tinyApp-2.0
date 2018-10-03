@@ -5,12 +5,19 @@
   <div class="form-group center-container">
     <h1> WELCOME TO TINY APP </h1>
   </div>
-<!-- <form method="POST" action="/logout">
-<input type="submit" value="LOGOUT">
-</form> -->
 
-
-
-
-<!-- <p><a href="/login">LOGIN</a></p>
-<p><a href="/register">REGISTER</a></p> -->
+  <% if(username) {%>
+    <div class="button-container">
+        <%= username %>
+        <form class="urlMargin" action="/logout" method="POST">
+          <div><button type="submit" class="btn btn-primary">Logout</button></div>
+        </form>
+    </div>
+  <% } else { %>
+    <div class="button-container">
+        <form class="urlMargin" action="/login" method="POST">
+          <input style="width:420px"  type="text" name="userName" class="form-control updateUrlInputMargin" id="" placeholder="username">
+          <div><button type="submit" class="btn btn-primary">Login</button></div>
+        </form>
+    </div>
+  <% } %>
