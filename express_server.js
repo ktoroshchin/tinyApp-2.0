@@ -20,11 +20,6 @@ var urlDatabase = {
   '9sm5xK': 'http://www.google.com'
 };
 
-
-app.get('/', (req, res) => {
-  res.send('Hello!');
-});
-
 app.get('/urls', (req, res) => {
   let templateVars = { urls: urlDatabase };
   res.render('urls_index', templateVars);
@@ -39,6 +34,14 @@ app.get('/urls/:id', (req, res) => {
   res.render('urls_show', templateVars);
 });
 
+//updates a long url in database
+app.post('/urls/:id', (req, res) => {
+  let shortURL = req.params.id;
+  urlDatabase[shortURL] = req.body.longURL;
+  res.redirect('/urls');
+});
+
+
 app.get('/u/:shortURL', (req, res) => {
   let longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
@@ -48,6 +51,12 @@ app.post('/urls', (req, res) => {
   const shortRandomURL = generateRandomUrl();
   urlDatabase[shortRandomURL] = req.body.longURL;
   res.redirect(`/urls/${shortRandomURL}`);
+});
+
+//deletes the short url from database
+app.post('/urls/:id/delete', (req, res) => {
+  delete urlDatabase[req.params.id];
+  res.redirect('/urls')
 });
 
 function generateRandomUrl() {

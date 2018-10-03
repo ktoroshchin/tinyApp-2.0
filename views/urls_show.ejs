@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles/styles.css">
+</head>
 <body>
-  <form class="" action="index.html" method="post">
 
-    <p><a href='#'><%= shortURL %><a/> ---> <%= longURL %> </p>
+  <form class="updateUrlMargin" action="/urls/<%= shortURL %>" method="POST">
+
+    <p>
+      <a href=''><%= shortURL %><a/> ---> <%= longURL %>
+      <input style="width:420px"  type="text" name="longURL" class="form-control updateUrlInputMargin" id="longURL" aria-describedby="emailHelp" placeholder="http://">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </p>
 
   </form>
 </body>

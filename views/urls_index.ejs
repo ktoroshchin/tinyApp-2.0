@@ -9,12 +9,24 @@
 
   <% include ./partials/_header %>
 
-  <form class="" action="/urls/9sm5xk/delete" method="POST">
 
     <% for(var shortUrl in urls) { %>
-    <p> <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl] %> <space> <button type="button" class="btn btn-primary">Primary</button> </p>
-    <% } %>
 
-  </form>
+    <div class="button-container">
+
+        <form class="urlMargin" action="/urls/<%=shortUrl%>/delete" method="POST">
+          <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl] %>
+          <div><button type="submit" class="btn btn-primary">Delete</button></div>
+        </form>
+
+       <form class="urlMargin" action="/urls/<%=shortUrl%>" method="GET">
+         <div><button type="submit" class="btn btn-primary urlsButtonMargin">Edit</button></div>
+       </form>
+
+   </div>
+
+   <% } %>
+
+
 </body>
 </html>

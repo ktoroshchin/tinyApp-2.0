@@ -3,6 +3,33 @@
   justify-content: center;
 }
 
-.a {
-  margin-right: 10px;
+.urlMargin {
+  margin-left: 5px;
+}
+
+.updateUrlMargin {
+  margin: 20px;
+}
+
+.updateUrlInputMargin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.urlsButtonMargin {
+  display: flex;
+  margin-left: 10px;
+  direction: : right;
+
+}
+
+
+.button-container form,
+.button-container form div {
+    display: inline;
+}
+
+.button-container button {
+    display: inline;
+    margin-bottom: 10px
 }
