@@ -10,6 +10,9 @@ const bodyParser = require("body-parser");
 
 const cookieParser = require('cookie-parser');
 
+const bcrypt = require('bcryptjs');
+
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -24,17 +27,17 @@ const users = {
   'userRandomID': {
     id: 'userRandomID',
     email: 'user@example.com',
-    password: 'purple-monkey-dinosaur'
+    password: bcrypt.hashSync('purple-monkey-dinosaur', 10)
   },
   'user2RandomID': {
     id: 'user2RandomID',
     email: 'user2@example.com',
-    password: 'dishwasher-funk'
+    password: bcrypt.hashSync('dishwasher-funk',10)
   },
   'user3RandomID': {
     id: 'user3RandomID',
     email: 'k.toroshchin@gmail.com',
-    password: 'montreal'
+    password: bcrypt.hashSync('montreal',10)
   }
 };
 
@@ -76,6 +79,7 @@ app.get('/urls/:id', (req, res) => {
 
 app.get('/u/:shortURL', (req, res) => {
   let longURL = urlDatabase[req.params.shortURL].longURL;
+  console.log(longURL);
   res.redirect(longURL);
 });
 
@@ -125,14 +129,14 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   if(!req.body.password || !req.body.email) {
     res.status(400).send('Please put valid email and password');
-  } else if (!checkIfEmailExist(req.body.email) || (!checkIfPasswordMatch(req.body.password))) {
+  } else if (!checkIfEmailExist(req.body.email) || !bcrypt.compareSync(req.body.password, users[returnLogedInUserId(req.body.email)].password)) {
     res.status(400).send('Wrong email or password');
   } else {
     res.cookie('user_id', returnLogedInUserId(req.body.email));
     res.redirect('/urls');
   }
 });
-
+//bcrypt.compareSync(req.body.password, )
 //deleting cookie when user click logout button
 app.post('/logout', (req, res) => {
   res.clearCookie('user_id');
@@ -148,7 +152,7 @@ app.post('/register', (req, res) => {
     const randomUserId = generateRandomUrl();
     const newUser = {
       id: randomUserId,
-      password: req.body.password,
+      password: bcrypt.hashSync(req.body.password,10),
       email: req.body.email
     };
 
