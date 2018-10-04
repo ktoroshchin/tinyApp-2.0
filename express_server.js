@@ -39,15 +39,22 @@ const users = {
 };
 
 var urlDatabase = {
-  'b2xVn2': 'http://www.lighthouselabs.ca',
-  '9sm5xK': 'http://www.google.com'
+  'b2xVn2': {
+    longURL: 'http://www.lighthouselabs.ca',
+    userID: 'userRandomID'
+ },
+  '9sm5xK': {
+    longURL: 'http://www.google.com',
+    userID: 'user2RandomID'
+  }
 };
+
 
 //when user visits /urls .get will display urls_index page
 app.get('/urls', (req, res) => {
   let templateVars = {
-    urls: urlDatabase,
-    username: users[req.cookies['id']]
+    urls: displayUserOwnedUrls(urlDatabase,req.cookies['user_id']),
+    username: users[req.cookies['user_id']]
   };
   res.render('urls_index', templateVars);
 });
@@ -56,16 +63,19 @@ app.get('/urls/new', (req, res) => {
   res.render('urls_new');
 });
 
+
+
 app.get('/urls/:id', (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
-    longURL: urlDatabase[req.params.id]
+    longURL: urlDatabase[req.params.id].longURL
   };
+  console.log(templateVars.shortUrl)
   res.render('urls_show', templateVars);
 });
 
 app.get('/u/:shortURL', (req, res) => {
-  let longURL = urlDatabase[req.params.shortURL];
+  let longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(longURL);
 });
 
@@ -74,21 +84,36 @@ app.get('/register', (req, res) => {
 });
 
 //updates a long url in database
-app.post('/urls/:id', (req, res) => {
-  let shortURL = req.params.id;
-  urlDatabase[shortURL] = req.body.longURL;
+app.post('/urls/:shortURL', (req, res) => {
+  var currentUserId = req.cookies.user_id
+  let shortURL = req.params.shortURL;
+  if(urlDatabase[shortURL].userID === currentUserId) {
+    urlDatabase[shortURL].longURL = req.body.longURL;
+  } else {
+   res.send('Not your URL')
+   return;
+  }
   res.redirect('/urls');
 });
 
 app.post('/urls', (req, res) => {
   const shortRandomURL = generateRandomUrl();
-  urlDatabase[shortRandomURL] = req.body.longURL;
+  urlDatabase[shortRandomURL] = {longURL: req.body.longURL, userID: req.cookies.user_id };
+  console.log(urlDatabase);
   res.redirect(`/urls/${shortRandomURL}`);
 });
 
 //deletes the short url from database
 app.post('/urls/:id/delete', (req, res) => {
-  delete urlDatabase[req.params.id];
+  var currentUserId = req.cookies.user_id
+  if(urlDatabase[req.params.id].userID === currentUserId) {
+    delete urlDatabase[req.params.id];
+  } else {
+   res.send('Not your URL')
+   return;
+  }
+
+
   res.redirect('/urls')
 });
 
@@ -103,14 +128,14 @@ app.post('/login', (req, res) => {
   } else if (!checkIfEmailExist(req.body.email) || (!checkIfPasswordMatch(req.body.password))) {
     res.status(400).send('Wrong email or password');
   } else {
-    res.cookie('id', returnLogedInUserId(req.body.email));
+    res.cookie('user_id', returnLogedInUserId(req.body.email));
     res.redirect('/urls');
   }
 });
 
 //deleting cookie when user click logout button
 app.post('/logout', (req, res) => {
-  res.clearCookie('id');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 });
 
@@ -128,7 +153,7 @@ app.post('/register', (req, res) => {
     };
 
     users[randomUserId] = newUser;
-    res.cookie('id', users[randomUserId].id);
+    res.cookie('user_id', users[randomUserId].id);
     res.redirect('/urls');
     console.log(users);
     console.log(req.body.email);
@@ -138,6 +163,14 @@ app.post('/register', (req, res) => {
 function returnLogedInUserId (email) {
   for(var key in users) {
     if(users[key].email  === email){
+      return users[key].id
+    }
+  }
+}
+
+function returnUserId (userID) {
+  for(var key in users) {
+    if(users[key].id  === userID){
       return users[key].id
     }
   }
@@ -180,6 +213,15 @@ function generateRandomUrl() {
   return randomized;
 }
 
+function displayUserOwnedUrls (urlDatabase, userId) {
+  var obj = {};
+  for(var i in urlDatabase) {
+    if(userId === urlDatabase[i].userID) {
+      obj[i] = urlDatabase[i];
+    }
+  }
+  return obj;
+}
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);

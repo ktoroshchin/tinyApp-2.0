@@ -8,12 +8,14 @@
 
   <% if(username) {%>
     <div class="button-container">
-        <%= username['id'] %>
+        <%= username['email'] %>
+
         <form class="urlMargin" action="/logout" method="POST">
           <div><button type="submit" class="btn btn-primary">Logout</button></div>
         </form>
     </div>
   <% } else { %>
+
     <div class="button-container">
         <form class="urlMargin" action="/login" method="GET">
           <div><button type="submit" class="btn btn-primary">Login</button></div>

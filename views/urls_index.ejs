@@ -14,17 +14,30 @@
     <div class="button-container">
 
         <form class="urlMargin" action="/urls/<%=shortUrl%>/delete" method="POST">
-          <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl] %>
+          <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl].longURL %>
           <div><button type="submit" class="btn btn-primary">Delete</button></div>
         </form>
 
        <form class="urlMargin" action="/urls/<%=shortUrl%>" method="GET">
          <div><button type="submit" class="btn btn-primary urlsButtonMargin">Edit</button></div>
        </form>
+     <% } %>
 
-   </div>
+       <% if(username) { %>
 
-   <% } %>
+         <div class="button-container">
+             <form class="urlMargin" action="/urls/new" method="GET">
+               <div><button type="submit" class="btn btn-primary urlsButtonMargin">create URL</button></div>
+             </form>
+        </div>
+        <% } else { %>
+           <div class="button-container">
+              <form class="urlMargin" action="/login" method="POST">
+                 <div><button type="submit" class="btn btn-primary urlsButtonMargin">create URL</button></div>
+              </form>
+          </div>
+
+         <% } %>
 
 
 </body>
