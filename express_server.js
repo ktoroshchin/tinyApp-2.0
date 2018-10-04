@@ -43,10 +43,11 @@ var urlDatabase = {
   '9sm5xK': 'http://www.google.com'
 };
 
+//when user visits /urls .get will display urls_index page
 app.get('/urls', (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies.userName
+    username: users[req.cookies['id']]
   };
   res.render('urls_index', templateVars);
 });
@@ -91,15 +92,25 @@ app.post('/urls/:id/delete', (req, res) => {
   res.redirect('/urls')
 });
 
+app.get('/login', (req, res) => {
+  res.render('login')
+});
+
 //storing cookies when user inputs a name
 app.post('/login', (req, res) => {
-  res.cookie('userName', req.body.userName)
-  res.redirect('/urls');
+  if(!req.body.password || !req.body.email) {
+    res.status(400).send('Please put valid email and password');
+  } else if (!checkIfEmailExist(req.body.email) || (!checkIfPasswordMatch(req.body.password))) {
+    res.status(400).send('Wrong email or password');
+  } else {
+    res.cookie('id', returnLogedInUserId(req.body.email));
+    res.redirect('/urls');
+  }
 });
 
 //deleting cookie when user click logout button
 app.post('/logout', (req, res) => {
-  res.clearCookie('userName');
+  res.clearCookie('id');
   res.redirect('/urls');
 });
 
@@ -124,10 +135,26 @@ app.post('/register', (req, res) => {
   }
 });
 
-function checkIfEmailExist(fun) {
+function returnLogedInUserId (email) {
+  for(var key in users) {
+    if(users[key].email  === email){
+      return users[key].id
+    }
+  }
+}
+
+function checkIfEmailExist(email) {
   for (var key in users) {
-    console.log(users[key].email)
-    if(users[key].email === fun){
+    if(users[key].email === email){
+      return true
+    }
+  }
+}
+
+
+function checkIfPasswordMatch(password) {
+  for (var key in users) {
+    if(users[key].password === password){
       return true
     }
   }

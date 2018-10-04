@@ -8,16 +8,20 @@
 
   <% if(username) {%>
     <div class="button-container">
-        <%= username %>
+        <%= username['id'] %>
         <form class="urlMargin" action="/logout" method="POST">
           <div><button type="submit" class="btn btn-primary">Logout</button></div>
         </form>
     </div>
   <% } else { %>
     <div class="button-container">
-        <form class="urlMargin" action="/login" method="POST">
-          <input style="width:420px"  type="text" name="userName" class="form-control updateUrlInputMargin" id="" placeholder="username">
+        <form class="urlMargin" action="/login" method="GET">
           <div><button type="submit" class="btn btn-primary">Login</button></div>
+        </form>
+    </div>
+    <div class="button-container">
+        <form class="urlMargin" action="/register" method="GET">
+          <div><button type="submit" class="btn btn-primary">Register</button></div>
         </form>
     </div>
   <% } %>
