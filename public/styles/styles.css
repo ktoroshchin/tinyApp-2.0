@@ -19,8 +19,6 @@
   padding-left: 0px;
 }
 
-.form-check
-
 .urlMargin {
   margin-left: 5px;
 }
@@ -38,9 +36,7 @@
   display: flex;
   margin-left: 10px;
   direction: : right;
-
 }
-
 
 .button-container form,
 .button-container form div {

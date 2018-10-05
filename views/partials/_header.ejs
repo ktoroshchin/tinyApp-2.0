@@ -8,12 +8,12 @@
 
   <div class="center-container-1">
   <% if(username) {%>
+
     <%= username['email'] %>
+
   <br><br/>
 
     <div class="button-container">
-
-
         <form class="urlMargin" action="/logout" method="POST">
           <div><button type="submit" class="btn btn-primary">LOGOUT</button></div>
         </form>
@@ -21,20 +21,21 @@
   </div>
 
   <% } else { %>
-  <div class="center-container-1">
 
+  <div class="center-container-1">
     <div class="button-container">
         <form class="urlMargin" action="/login" method="GET">
           <div><button type="submit" class="btn btn-primary">LOGIN</button></div>
         </form>
     </div>
   </div>
-  <div class="center-container-1">
 
+  <div class="center-container-1">
     <div class="button-container">
         <form class="urlMargin" action="/register" method="GET">
           <div><button type="submit" class="btn btn-primary">REGISTER</button></div>
         </form>
     </div>
   </div>
+
   <% } %>

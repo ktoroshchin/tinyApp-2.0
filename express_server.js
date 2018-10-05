@@ -12,21 +12,16 @@ var cookieSession = require('cookie-session')
 
 const bcrypt = require('bcryptjs');
 
-
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
 app.use(express.static('./public'));
 
-// app.use(cookieParser());
-
 app.use(cookieSession({
   name: 'session',
   keys: ['10', '12', '15']
 }));
-
-
 
 app.set('view engine', 'ejs');
 
@@ -88,7 +83,7 @@ app.get('/u/:shortURL', (req, res) => {
 });
 
 app.get('/register', (req, res) => {
-  res.render('registration_form')
+  res.render('registration_form');
 });
 
 //updates a long url in database
@@ -116,14 +111,14 @@ app.post('/urls/:id/delete', (req, res) => {
   if(urlDatabase[req.params.id].userID === currentUserId) {
     delete urlDatabase[req.params.id];
   } else {
-   res.send('Not your URL')
+   res.send('Not your URL');
    return;
   }
-  res.redirect('/urls')
+  res.redirect('/urls');
 });
 
 app.get('/login', (req, res) => {
-  res.render('login')
+  res.render('login');
 });
 
 //storing cookies when user inputs a name
@@ -168,7 +163,7 @@ app.post('/register', (req, res) => {
 function returnLogedInUserId (email) {
   for(var key in users) {
     if(users[key].email  === email){
-      return users[key].id
+      return users[key].id;
     }
   }
 }
@@ -176,7 +171,7 @@ function returnLogedInUserId (email) {
 function returnUserId (userID) {
   for(var key in users) {
     if(users[key].id  === userID){
-      return users[key].id
+      return users[key].id;
     }
   }
 }
@@ -184,7 +179,7 @@ function returnUserId (userID) {
 function checkIfEmailExist(email) {
   for (var key in users) {
     if(users[key].email === email){
-      return true
+      return true;
     }
   }
 }
