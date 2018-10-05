@@ -15,6 +15,11 @@
   margin-left: 633px;
 }
 
+.center-container-4 {
+  display: flex;
+}
+
+
 .form-check {
   padding-left: 0px;
 }
@@ -46,4 +51,8 @@
 .button-container button {
     display: inline;
     margin-bottom: 10px
+}
+
+.right-space {
+  margin-left: 20px;
 }

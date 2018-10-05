@@ -11,10 +11,10 @@
 
     <% for(var shortUrl in urls) { %>
 
-    <div class="button-container">
+    <div class="button-container right-space">
 
         <form class="urlMargin" action="/urls/<%=shortUrl%>/delete" method="POST">
-          <a href='#'><%= shortUrl %><a/> ---> <%= urls[shortUrl].longURL %>
+          <a href='#'><%= shortUrl %><a/> -----------> <%= urls[shortUrl].longURL %>
           <div><button type="submit" class="btn btn-primary">Delete</button></div>
         </form>
 
@@ -24,7 +24,7 @@
      <% } %>
 
        <% if(username) { %>
-        <div class="center-container-3">
+        <div class="center-container-4">
          <div class="button-container">
              <form class="urlMargin" action="/urls/new" method="GET">
                <div><button type="submit" class="btn btn-primary urlsButtonMargin">CREATE URL</button></div>
@@ -32,11 +32,14 @@
         </div>
       </div>
         <% } else { %>
+        <div class="center-container-3">
            <div class="button-container">
               <form class="urlMargin" action="/login" method="POST">
                  <div><button type="submit" class="btn btn-primary urlsButtonMargin">CREATE URL</button></div>
               </form>
           </div>
+        </div>
+      </div>
 
          <% } %>
 
