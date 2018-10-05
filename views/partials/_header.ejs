@@ -6,24 +6,35 @@
     <h1> WELCOME TO TINY APP </h1>
   </div>
 
+  <div class="center-container-1">
   <% if(username) {%>
+    <%= username['email'] %>
+  <br><br/>
+
     <div class="button-container">
-        <%= username['email'] %>
+
 
         <form class="urlMargin" action="/logout" method="POST">
-          <div><button type="submit" class="btn btn-primary">Logout</button></div>
+          <div><button type="submit" class="btn btn-primary">LOGOUT</button></div>
         </form>
     </div>
+  </div>
+
   <% } else { %>
+  <div class="center-container-1">
 
     <div class="button-container">
         <form class="urlMargin" action="/login" method="GET">
-          <div><button type="submit" class="btn btn-primary">Login</button></div>
+          <div><button type="submit" class="btn btn-primary">LOGIN</button></div>
         </form>
     </div>
+  </div>
+  <div class="center-container-1">
+
     <div class="button-container">
         <form class="urlMargin" action="/register" method="GET">
-          <div><button type="submit" class="btn btn-primary">Register</button></div>
+          <div><button type="submit" class="btn btn-primary">REGISTER</button></div>
         </form>
     </div>
+  </div>
   <% } %>

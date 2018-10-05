@@ -3,6 +3,24 @@
   justify-content: center;
 }
 
+.center-container-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.center-container-3 {
+  display: flex;
+  margin-left: 633px;
+}
+
+.form-check {
+  padding-left: 0px;
+}
+
+.form-check
+
 .urlMargin {
   margin-left: 5px;
 }

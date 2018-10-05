@@ -24,21 +24,21 @@
      <% } %>
 
        <% if(username) { %>
-
+        <div class="center-container-3">
          <div class="button-container">
              <form class="urlMargin" action="/urls/new" method="GET">
-               <div><button type="submit" class="btn btn-primary urlsButtonMargin">create URL</button></div>
+               <div><button type="submit" class="btn btn-primary urlsButtonMargin">CREATE URL</button></div>
              </form>
         </div>
+      </div>
         <% } else { %>
            <div class="button-container">
               <form class="urlMargin" action="/login" method="POST">
-                 <div><button type="submit" class="btn btn-primary urlsButtonMargin">create URL</button></div>
+                 <div><button type="submit" class="btn btn-primary urlsButtonMargin">CREATE URL</button></div>
               </form>
           </div>
 
          <% } %>
-
 
 </body>
 </html>
