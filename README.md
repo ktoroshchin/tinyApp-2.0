@@ -16,3 +16,16 @@ TinyApp is a full stack web application built with Node and Express that allows 
 !["Screenshot of user short URL list"](https://github.com/ktoroshchin/tinyApp-2.0/blob/master/docs/user_short_urls.png)
 ### Screenshot of user can update short URL page
 !["Screenshot of user can update short URL page"](https://github.com/ktoroshchin/tinyApp-2.0/blob/master/docs/user_update_url.png)
+
+## Dependencies
+
+- Node.js
+- EJS
+- bcrypt
+- body-parser
+- cookie-session
+
+## Getting Started
+
+- Install all dependencies (using the `npm install` command).
+- Run the development web server using the `node express_server.js` command. 
