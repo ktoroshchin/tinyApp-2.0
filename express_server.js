@@ -84,7 +84,6 @@ app.get('/urls/:id', (req, res) => {
   var currentUserId = req.session.user_id
   if(req.session.user_id) {
     if(urlDatabase[req.params.id].userID === currentUserId) {
-      // res.render('urls_show', templateVars);
       res.render('urls_show', templateVars);
     } else {
       res.send('Not your URL')
