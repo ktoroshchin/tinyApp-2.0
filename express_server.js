@@ -81,15 +81,30 @@ app.get('/urls/:id', (req, res) => {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id].longURL
   };
+  var currentUserId = req.session.user_id
   if(req.session.user_id) {
-    res.render('urls_show', templateVars);
+    if(urlDatabase[req.params.id].userID === currentUserId) {
+      // res.render('urls_show', templateVars);
+      res.render('urls_show', templateVars);
+    } else {
+      res.send('Not your URL')
+    }
   } else {
-    res.redirect('/login')
+    res.redirect('/login');
   }
 });
 
+//updates a long url in database
+app.post('/urls/:shortURL', (req, res) => {
+  const currentUserId = req.session.user_id
+  let shortURL = req.params.shortURL;
+  urlDatabase[shortURL].userID = currentUserId
+  urlDatabase[shortURL].longURL = req.body.longURL;
+  res.redirect('/urls');
+});
+
 app.get('/u/:shortURL' , (req, res) => {
-  let longURL = urlDatabase[req.params.shortURL].longURL;
+  const longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(longURL);
 });
 
@@ -97,18 +112,6 @@ app.get('/register', (req, res) => {
   res.render('registration_form');
 });
 
-//updates a long url in database
-app.post('/urls/:shortURL', (req, res) => {
-  var currentUserId = req.session.user_id
-  let shortURL = req.params.shortURL;
-  if(urlDatabase[shortURL].userID === currentUserId) {
-    urlDatabase[shortURL].longURL = req.body.longURL;
-  } else {
-   res.send('Not your URL')
-   return;
-  }
-  res.redirect('/urls');
-});
 
 app.post('/urls', (req, res) => {
   const shortRandomURL = generateRandomUrl();
@@ -118,7 +121,7 @@ app.post('/urls', (req, res) => {
 
 //deletes the short url from database
 app.post('/urls/:id/delete', (req, res) => {
-  var currentUserId = req.session.user_id
+  const currentUserId = req.session.user_id
   if(urlDatabase[req.params.id].userID === currentUserId) {
     delete urlDatabase[req.params.id];
   } else {
