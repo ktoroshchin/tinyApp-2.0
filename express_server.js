@@ -56,8 +56,16 @@ var urlDatabase = {
 
 
 //when user visits /urls .get will display urls_index page
+app.get('/', (req, res) => {
+  if(req.session.user_id) {
+    res.redirect('/urls')
+  } else {
+    res.redirect('/login')
+  }
+});
+
 app.get('/urls', (req, res) => {
-  let templateVars = {
+  const templateVars = {
     urls: displayUserOwnedUrls(urlDatabase,req.session.user_id),
     username: users[req.session.user_id]
   };
@@ -73,12 +81,15 @@ app.get('/urls/:id', (req, res) => {
     shortURL: req.params.id,
     longURL: urlDatabase[req.params.id].longURL
   };
-  res.render('urls_show', templateVars);
+  if(req.session.user_id) {
+    res.render('urls_show', templateVars);
+  } else {
+    res.redirect('/login')
+  }
 });
 
-app.get('/u/:shortURL', (req, res) => {
+app.get('/u/:shortURL' , (req, res) => {
   let longURL = urlDatabase[req.params.shortURL].longURL;
-  console.log(longURL);
   res.redirect(longURL);
 });
 
@@ -158,55 +169,27 @@ app.post('/register', (req, res) => {
   }
 });
 
-
-
 function returnLogedInUserId (email) {
-  for(var key in users) {
-    if(users[key].email  === email){
-      return users[key].id;
-    }
-  }
-}
-
-function returnUserId (userID) {
-  for(var key in users) {
-    if(users[key].id  === userID){
-      return users[key].id;
+  for(const user in users) {
+    if(users[user].email  === email){
+      return users[user].id;
     }
   }
 }
 
 function checkIfEmailExist(email) {
-  for (var key in users) {
-    if(users[key].email === email){
+  for (const user in users) {
+    if(users[user].email === email){
       return true;
     }
   }
-}
-
-
-function checkIfPasswordMatch(password) {
-  for (var key in users) {
-    if(users[key].password === password){
-      return true
-    }
-  }
-}
-
-function authenticateUser(email, password) {
-  for (const userId in users) {
-    if (users[userId].password === password && users[userId].email === email) {
-      var user = users[userId];
-    }
-  }
-  return user;
 }
 
 function generateRandomUrl() {
   const characters = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'a', 'b', 'c', 'd', 'e', 'x', 'w', 'r', 'g', 'p'];
   const strLength = 6;
   let randomized = '';
-  for (var i = 0; i < strLength; i++) {
+  for (let i = 0; i < strLength; i++) {
     let randomIndex = characters[Math.floor(Math.random() * characters.length)];
     randomized = randomized.concat(randomIndex);
   }
@@ -214,13 +197,13 @@ function generateRandomUrl() {
 }
 
 function displayUserOwnedUrls (urlDatabase, userId) {
-  var obj = {};
-  for(var i in urlDatabase) {
-    if(userId === urlDatabase[i].userID) {
-      obj[i] = urlDatabase[i];
+  const urlList = {};
+  for(const shortUrl in urlDatabase) {
+    if(userId === urlDatabase[shortUrl].userID) {
+      urlList[shortUrl] = urlDatabase[shortUrl];
     }
   }
-  return obj;
+  return urlList;
 }
 
 app.listen(PORT, () => {
