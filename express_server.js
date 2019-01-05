@@ -60,7 +60,7 @@ app.get('/', (req, res) => {
   if(req.session.user_id) {
     res.redirect('/urls')
   } else {
-    res.redirect('/login')
+    res.redirect('/urls')
   }
 });
 
@@ -102,7 +102,7 @@ app.post('/urls/:shortURL', (req, res) => {
   res.redirect('/urls');
 });
 
-app.get('/u/:shortURL' , (req, res) => {
+app.get('/redirect/:shortURL' , (req, res) => {
   const longURL = urlDatabase[req.params.shortURL].longURL;
   res.redirect(longURL);
 });

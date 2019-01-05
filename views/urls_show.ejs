@@ -9,7 +9,8 @@
   <form class="updateUrlMargin" action="/urls/<%= shortURL %>" method="POST">
 
     <p>
-      <a href=''><%= shortURL %><a/> ---> <%= longURL %>
+      <a href='<%= longURL %>'>Click <%= shortURL %> to redirect<a/></span>
+       ---> <%= longURL %>
       <input style="width:420px"  type="text" name="longURL" class="form-control updateUrlInputMargin" id="longURL" aria-describedby="emailHelp" placeholder="http://">
       <button type="submit" class="btn btn-primary">Update</button>
     </p>

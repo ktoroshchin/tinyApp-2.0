@@ -15,6 +15,7 @@
 
         <form class="urlMargin" action="/urls/<%=shortUrl%>/delete" method="POST">
           <a href='#'><%= shortUrl %><a/> -----------> <%= urls[shortUrl].longURL %>
+          <h4>To share link use format: localhost:8080/redirect/<%= shortUrl %></h4>
           <div><button type="submit" class="btn btn-primary">Delete</button></div>
         </form>
 
@@ -32,7 +33,7 @@
         </div>
       </div>
         <% } else { %>
-        <div class="center-container-3">
+        <div class="center-container-1">
            <div class="button-container">
               <form class="urlMargin" action="/login" method="POST">
                  <div><button type="submit" class="btn btn-primary urlsButtonMargin">CREATE URL</button></div>
