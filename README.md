@@ -1,4 +1,6 @@
-# TinyApp Project
+# TinyApp Project(deployed)
+
+Visit: https://tiny-bitly-clone.herokuapp.com/urls
 
 TinyApp is a full stack web application built with Node and Express that allows users to shorten long URLSs (a la bit.ly).
 
